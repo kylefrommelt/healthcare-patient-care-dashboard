@@ -1,0 +1,138 @@
+<div class="healthcare-dashboard">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="dashboard-header">
+    <mat-toolbar-row>
+      <button 
+        mat-icon-button 
+        class="menu-toggle"
+        (click)="drawer.toggle()"
+        aria-label="Toggle navigation">
+        <mat-icon>menu</mat-icon>
+      </button>
+      
+      <span class="app-title">
+        <mat-icon class="app-icon">local_hospital</mat-icon>
+        {{ title }}
+      </span>
+      
+      <span class="spacer"></span>
+      
+      <!-- User Profile Section -->
+      <div class="user-profile" *ngIf="isAuthenticated">
+        <mat-chip-list>
+          <mat-chip color="accent" selected>
+            <mat-icon matChipAvatar>account_circle</mat-icon>
+            {{ getUserRole() }}
+          </mat-chip>
+        </mat-chip-list>
+        
+        <button 
+          mat-button 
+          [matMenuTriggerFor]="userMenu"
+          class="user-menu-button">
+          <div class="user-avatar">{{ getUserInitials() }}</div>
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        
+        <mat-menu #userMenu="matMenu">
+          <div class="user-info">
+            <div class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</div>
+            <div class="user-email">{{ currentUser?.email }}</div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>help</mat-icon>
+            <span>Help</span>
+          </button>
+          <button mat-menu-item (click)="onLogout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+      
+      <!-- Login Button for non-authenticated users -->
+      <button 
+        mat-raised-button 
+        color="accent"
+        *ngIf="!isAuthenticated"
+        (click)="onNavigate('/login')">
+        Login
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <!-- Main Content Area -->
+  <mat-sidenav-container class="dashboard-container">
+    <!-- Side Navigation -->
+    <mat-sidenav #drawer class="dashboard-sidenav" mode="side" opened="true">
+      <mat-nav-list>
+        <div class="nav-header">
+          <mat-icon class="nav-header-icon">medical_services</mat-icon>
+          <h3>Clinical Dashboard</h3>
+        </div>
+        
+        <mat-list-item 
+          *ngFor="let item of navigationItems"
+          [routerLink]="item.route"
+          routerLinkActive="active-nav-item"
+          class="nav-item">
+          <mat-icon matListIcon>{{ item.icon }}</mat-icon>
+          <div matLine>{{ item.label }}</div>
+          <div matLine class="nav-description">{{ item.description }}</div>
+        </mat-list-item>
+      </mat-nav-list>
+      
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <h4>Quick Actions</h4>
+        <button mat-stroked-button class="quick-action-btn">
+          <mat-icon>add</mat-icon>
+          New Patient
+        </button>
+        <button mat-stroked-button class="quick-action-btn">
+          <mat-icon>schedule</mat-icon>
+          Book Appointment
+        </button>
+        <button mat-stroked-button class="quick-action-btn">
+          <mat-icon>emergency</mat-icon>
+          Emergency Alert
+        </button>
+      </div>
+    </mat-sidenav>
+
+    <!-- Main Content -->
+    <mat-sidenav-content class="dashboard-content">
+      <!-- Router Outlet for Main Content -->
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+      
+      <!-- Footer -->
+      <footer class="dashboard-footer">
+        <div class="footer-content">
+          <div class="footer-section">
+            <span>HIPAA Compliant</span>
+            <mat-icon class="compliance-icon">verified_user</mat-icon>
+          </div>
+          <div class="footer-section">
+            <span>© 2024 Healthcare Patient Care Dashboard</span>
+          </div>
+          <div class="footer-section">
+            <span>Version 1.0.0</span>
+          </div>
+        </div>
+      </footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<!-- Loading Spinner -->
+<div class="loading-overlay" *ngIf="!isAuthenticated">
+  <mat-spinner></mat-spinner>
+  <p>Loading Healthcare Dashboard...</p>
+</div> 
