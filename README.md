@@ -121,17 +121,6 @@ See `/docs` folder for:
 - Security implementation guide
 - Deployment procedures
 
-## 🎯 UPMC Alignment
-
-This project demonstrates key competencies for the UPMC Software Engineer Associate role:
-
-- **Healthcare IT Focus**: Patient care workflows and clinical data management
-- **Technical Skills**: Angular, TypeScript, .NET, testing, Git
-- **Security Awareness**: HIPAA compliance and secure coding practices
-- **Agile Practices**: Iterative development and cross-functional collaboration
-- **DevOps Integration**: CI/CD ready architecture
-- **Enterprise Patterns**: Scalable, maintainable code structure
-
 ## 📞 Contact
 
 Built to showcase healthcare IT engineering capabilities for enterprise environments. 
